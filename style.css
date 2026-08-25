@@ -1,0 +1,571 @@
+/* ==========================================================
+   TOKENS — paleta e escala tipográfica do projeto
+   Tema: "estádio à noite" — verde-gramado escuro, listras de
+   campo sutis no fundo, número grande estilo placar eletrônico.
+   ========================================================== */
+:root {
+  --cor-fundo: #0b1710;
+  --cor-superficie: #12241a;
+  --cor-superficie-alta: #17301f;
+  --cor-borda: #23402d;
+
+  --cor-texto: #eaf3ec;
+  --cor-texto-fraco: #8aa694;
+
+  --cor-destaque: #b8ff3d;   /* lima — estilo linha de campo / placar */
+  --cor-ouro: #f2b705;       /* divisão / skill rating */
+  --cor-vitoria: #6dffb2;
+  --cor-empate: #f2b705;
+  --cor-derrota: #ff6f6f;
+
+  --fonte-placar: "Teko", sans-serif;
+  --fonte-texto: "Inter", system-ui, sans-serif;
+  --fonte-mono: "Space Mono", monospace;
+
+  --raio: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Listras de gramado bem sutis no fundo, atmosfera de estádio */
+.fundo-campo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      100deg,
+      rgba(184, 255, 61, 0.025) 0px,
+      rgba(184, 255, 61, 0.025) 2px,
+      transparent 2px,
+      transparent 120px
+    ),
+    radial-gradient(circle at 50% 0%, #123321 0%, var(--cor-fundo) 55%);
+}
+
+/* ==========================================================
+   TOPO
+   ========================================================== */
+.topo {
+  padding: 48px 20px 24px;
+  text-align: center;
+}
+
+.topo__marca {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--fonte-placar);
+  line-height: 1;
+}
+
+.topo__marca-fc {
+  font-size: clamp(2.6rem, 8vw, 4.2rem);
+  font-weight: 700;
+  color: var(--cor-texto);
+  letter-spacing: 1px;
+}
+
+.topo__marca-clubs {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--cor-destaque);
+  letter-spacing: 3px;
+}
+
+.topo__subtitulo {
+  margin: 10px 0 0;
+  color: var(--cor-texto-fraco);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================
+   CONTEÚDO / LAYOUT GERAL
+   ========================================================== */
+.conteudo {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px 60px;
+}
+
+/* ==========================================================
+   BUSCA
+   ========================================================== */
+.busca {
+  margin-bottom: 32px;
+}
+
+.busca__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 14px;
+}
+
+.busca__campo-wrap {
+  flex: 1 1 220px;
+}
+
+.busca__campo {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 10px;
+  color: var(--cor-texto);
+  font-size: 1rem;
+  font-family: var(--fonte-texto);
+}
+
+.busca__campo:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+.busca__campo::placeholder {
+  color: var(--cor-texto-fraco);
+}
+
+.busca__plataformas {
+  display: flex;
+  gap: 6px;
+  flex: 1 1 100%;
+  order: 3;
+}
+
+.busca__plataforma {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  color: var(--cor-texto-fraco);
+  font-family: var(--fonte-texto);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.busca__plataforma:hover {
+  color: var(--cor-texto);
+}
+
+.busca__plataforma.is-ativa {
+  background: rgba(184, 255, 61, 0.1);
+  border-color: var(--cor-destaque);
+  color: var(--cor-destaque);
+}
+
+.busca__plataforma:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+.busca__botao {
+  flex: 1 1 140px;
+  padding: 14px 20px;
+  background: var(--cor-destaque);
+  color: #0b1710;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--fonte-texto);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.busca__botao:hover {
+  filter: brightness(1.08);
+}
+
+.busca__botao:active {
+  transform: translateY(1px);
+}
+
+.busca__botao:focus-visible {
+  outline: 2px solid var(--cor-texto);
+  outline-offset: 2px;
+}
+
+/* ==========================================================
+   ESTADOS: carregando / erro / vazio
+   ========================================================== */
+.estado--oculto {
+  display: none !important;
+}
+
+.estado {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--cor-texto-fraco);
+}
+
+.estado__spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 3px solid var(--cor-borda);
+  border-top-color: var(--cor-destaque);
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#estado-erro p {
+  color: var(--cor-derrota);
+}
+
+/* ==========================================================
+   RESULTADO
+   ========================================================== */
+.resultado--oculto {
+  display: none;
+}
+
+.resultado {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* --- Placar (elemento assinatura) --- */
+.placar {
+  background: linear-gradient(180deg, var(--cor-superficie-alta), var(--cor-superficie));
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 22px 22px 26px;
+  position: relative;
+  overflow: hidden;
+}
+
+.placar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(184, 255, 61, 0.03) 0,
+    rgba(184, 255, 61, 0.03) 1px,
+    transparent 1px,
+    transparent 40px
+  );
+  pointer-events: none;
+}
+
+.placar__linha-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.placar__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cor-texto-fraco);
+}
+
+.placar__badge {
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cor-ouro);
+  border: 1px solid var(--cor-ouro);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.placar__nome {
+  font-family: var(--fonte-placar);
+  font-weight: 700;
+  font-size: clamp(2rem, 8vw, 3rem);
+  line-height: 1;
+  margin: 8px 0 20px;
+  position: relative;
+  color: var(--cor-texto);
+}
+
+.placar__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.placar__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.placar__stat-valor {
+  font-family: var(--fonte-placar);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cor-texto);
+}
+
+.placar__stat-valor--destaque {
+  color: var(--cor-destaque);
+}
+
+.placar__stat-rotulo {
+  font-size: 0.68rem;
+  color: var(--cor-texto-fraco);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.placar__vdE {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.placar__vdE-item {
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.placar__vdE-num {
+  display: block;
+  font-family: var(--fonte-placar);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.placar__vdE-item--v .placar__vdE-num {
+  color: var(--cor-vitoria);
+}
+.placar__vdE-item--e .placar__vdE-num {
+  color: var(--cor-empate);
+}
+.placar__vdE-item--d .placar__vdE-num {
+  color: var(--cor-derrota);
+}
+
+.placar__vdE-rotulo {
+  font-size: 0.68rem;
+  color: var(--cor-texto-fraco);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- Cartões genéricos --- */
+.cartao {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 18px 20px;
+}
+
+.cartao__titulo {
+  margin: 0 0 14px;
+  font-family: var(--fonte-placar);
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  color: var(--cor-texto);
+}
+
+.cartao__vazio {
+  color: var(--cor-texto-fraco);
+  font-size: 0.9rem;
+}
+
+/* --- Gols --- */
+.gols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.gols__item {
+  text-align: center;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.gols__valor {
+  display: block;
+  font-family: var(--fonte-placar);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--cor-destaque);
+}
+
+.gols__rotulo {
+  font-size: 0.7rem;
+  color: var(--cor-texto-fraco);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- Tabela de jogadores --- */
+.tabela-wrap {
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.tabela th {
+  text-align: left;
+  color: var(--cor-texto-fraco);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.tabela td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.tabela tbody tr:hover {
+  background: rgba(184, 255, 61, 0.04);
+}
+
+.tabela td:first-child {
+  font-weight: 600;
+}
+
+/* --- Partidas recentes --- */
+.partidas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.partida {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--cor-borda);
+}
+
+.partida--vitoria {
+  border-left-color: var(--cor-vitoria);
+}
+.partida--empate {
+  border-left-color: var(--cor-empate);
+}
+.partida--derrota {
+  border-left-color: var(--cor-derrota);
+}
+
+.partida__adversario {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.partida__placar {
+  font-family: var(--fonte-mono);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.partida__data {
+  font-size: 0.75rem;
+  color: var(--cor-texto-fraco);
+}
+
+/* --- Debug --- */
+.cartao--debug summary {
+  cursor: pointer;
+  font-family: var(--fonte-placar);
+  font-size: 1.1rem;
+  color: var(--cor-texto-fraco);
+}
+
+.cartao--debug pre {
+  margin-top: 14px;
+  max-height: 320px;
+  overflow: auto;
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  color: var(--cor-texto-fraco);
+  background: var(--cor-fundo);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+/* ==========================================================
+   RODAPÉ
+   ========================================================== */
+.rodape {
+  text-align: center;
+  padding: 20px;
+  color: var(--cor-texto-fraco);
+  font-size: 0.75rem;
+}
+
+/* ==========================================================
+   RESPONSIVO
+   ========================================================== */
+@media (max-width: 480px) {
+  .placar__grid {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 16px;
+  }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  .estado__spinner {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
